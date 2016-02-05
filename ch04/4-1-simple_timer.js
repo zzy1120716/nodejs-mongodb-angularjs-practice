@@ -1,5 +1,6 @@
 /**
  * Created by Jazzy Hova on 2016/2/5.
+ * 一次性定时器
  */
 function simpleTimeout(consoleTimer) {
   console.timeEnd(consoleTimer);

@@ -1,5 +1,6 @@
 /**
  * Created by Jazzy Hova on 2016/2/5.
+ * 周期性定时器
  */
 var x = 0, y = 0, z = 0;
 function displayValues() {
