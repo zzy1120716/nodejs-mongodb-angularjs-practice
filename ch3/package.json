@@ -1,0 +1,9 @@
+{
+  "name": "my-mean-1",
+  "version": "0.1.0",
+  "author": "Jazzy Hova",
+  "description": "a simple node.js module",
+  "dependencies": {
+    "express": "latest"
+  }
+}
