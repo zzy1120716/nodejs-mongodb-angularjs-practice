@@ -3,9 +3,9 @@
  * 实现一系列阻塞fs调用，即时定时器和nextTick()调用来显示执行顺序
  */
 var fs = require("fs");
-fs.stat("nexttick.js", function(err, stats) {
+fs.stat("4-3-nexttick.js", function(err, stats) {
   if(stats) {
-    console.log("nexttick.js Exists");
+    console.log("4-3-nexttick.js Exists");
   }
 });
 setImmediate(function() {
