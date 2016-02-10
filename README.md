@@ -1,3 +1,3 @@
-# ¡¶Node.js+MongoDB+AngularJS Web¿ª·¢¡·´úÂë²ÙÁ·&Ñ§Ï°ÐÄµÃ
+# ã€ŠNode.js+MongoDB+AngularJS Webå¼€å‘ã€‹ä»£ç æ“ç»ƒ&å­¦ä¹ å¿ƒå¾—
 nodejs-mongodb-angularjs-practice<br/>
-ÊéÖÐÔ´ÂëµØÖ·£º<a href="https://github.com/bwdbooks/nodejs-mongodb-angularjs-web-development">¡¶Node.js+MongoDB+AngularJS Web¿ª·¢¡·Ô´Âë</a><br/>
+ä¹¦ä¸­æºç åœ°å€ï¼š<a href="https://github.com/bwdbooks/nodejs-mongodb-angularjs-web-development">ã€ŠNode.js+MongoDB+AngularJS Webå¼€å‘ã€‹æºç </a><br/>
