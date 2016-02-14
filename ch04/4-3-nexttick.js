@@ -1,6 +1,6 @@
 /**
  * Created by Jazzy Hova on 2016/2/5.
- * ÊµÏÖÒ»ÏµÁĞ×èÈûfsµ÷ÓÃ£¬¼´Ê±¶¨Ê±Æ÷ºÍnextTick()µ÷ÓÃÀ´ÏÔÊ¾Ö´ĞĞË³Ğò
+ * å®ç°äº†ä¸€ç³»åˆ—é˜»å¡fsè°ƒç”¨ï¼Œå³æ—¶è®¡æ—¶å™¨å’ŒnextTick()è°ƒç”¨æ¥æ˜¾ç¤ºæ‰§è¡Œé¡ºåº
  */
 var fs = require("fs");
 fs.stat("4-3-nexttick.js", function(err, stats) {
