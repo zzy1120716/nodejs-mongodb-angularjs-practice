@@ -1,0 +1,10 @@
+{
+  "name": "nodejs-mongodb-angularjs-practice",
+  "version": "0.1.0",
+  "author": "Jazzy Hova",
+  "description": "a nodejs mongodb angularjs practice",
+  "dependencies": {
+    "mongodb": "latest",
+    "mongoose": "latest"
+  }
+}

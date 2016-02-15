@@ -67,7 +67,7 @@ db.addUser({ user: "testUser",
     </tr>
     <tr>
         <td>otherDBRoles</td>
-        <td>{<database>:[array],<database>:[array]}</td>
+        <td>{database:[array],database:[array]}</td>
         <td>指定这个用户在其他数据库中拥有的角色（可选），数据库名为键，角色数组为值</td>
     </tr>
 </table>
@@ -179,7 +179,91 @@ show dbs
 #### 注意：
 #### (1)mongodb没有显示创建数据库的命令
 #### (2)使用use \<new_database_name\>切换到新数据库句柄
-#### (3)createCollection方法创建新的集合
+#### (3)createCollection方法创建新的集合（未创建集合的数据库实际上不会被保存）
 #### 例如：
 `use newDB`<br/>
 `db.createCollection("newCollection")`
+### 4.删除数据库
+`use newDB`<br/>
+`db.dropDatabase()`
+#### 注意：若不改变数据库句柄，直接创建集合，则已删除的数据库会被重新创建
+### 5.复制数据库
+`db.copyDatabase('customers', 'customers_archive')`<br/>
+`db.copyDatabase('newDB', 'newDB2')`
+## 六、管理MongoDB集合
+### 1.显示数据库中的集合列表
+`use test`<br/>
+`show collections`
+### 2.创建集合
+#### 语法：`db.createCollection(name, [options])`，其中options为一个参数对象
+#### 创建一个集合时可以指定的选项
+<table>
+    <tr>
+        <th>角色</th>
+        <th>说明</th>
+    </tr>
+    <tr>
+        <td>capped</td>
+        <td>若为true，表示为封顶集合，限制大小永远小于size属性设定的值，默认为false，即不限制增长</td>
+    </tr>
+    <tr>
+        <td>autoIndexID</td>
+        <td>若为true，表示自动添加_id字段，且在该字段上创建索引。注意：若capped为true，则该属性应该设为false。默认值为true</td>
+    </tr>
+    <tr>
+        <td>size</td>
+        <td>针对封顶集合设置，单位字节，栈式管理，超出size值，则旧文件自动删除</td>
+    </tr>
+    <tr>
+        <td>max</td>
+        <td>针对封顶集合设置，允许的最大文档数，其他同size</td>
+    </tr>
+</table>
+#### 示例：若test不存在，则自动被创建
+`use test`<br/>
+`show collections`<br/>
+`db.createCollection("newCollection", {capped: false})`
+### 3.删除集合
+#### 注意：先获取集合对象，使用`drop()`函数
+`use test`<br/>
+`show collections`<br/>
+`coll = db.getCollection("newCollection")`<br/>
+`coll.drop()`
+### 4.将文档添加到集合中
+#### (1)切换数据库
+#### (2)得到collection对象
+#### (3)调用`insert(document)`或`save(document)`
+#### 注意：document为格式正确的JavaScript对象，最终转化为BSON格式存储
+`use test`<br/>
+`coll = db.getCollection("transportation")`<br/>
+`coll.find()`<br/>
+`coll.insert({vehicle: "plane", speed: "480mph"})`<br/>
+`coll.insert({vehicle: "car", speed: "120mph"})`<br/>
+`coll.insert({vehicle: "train", speed: "120mph"})`
+### 5.在集合中查找文档
+#### `find()`列出所有文档
+#### `find(query)`query是一个JavaScript对象
+`use test`<br/>
+`coll = db.getCollection("transportation")`<br/>
+`coll.find()`<br/>
+`coll.find({speed: "120mph"})`
+### 6.更新集合中的文档
+#### (1)save(object)
+#### (2)update(query, update, options)
+#### 注：①update参数是一个对象，指定更新的运算符
+#### 运算符包括：`$inc` -- 递增该字段的值，`$set` -- 设置该字段的值，`$push` -- 将一个条目推送到数组，`$rename` -- 重命名某个字段
+#### 如：`{$inc: {count: 1}, $set: {name: "new_name"}, $rename: {"nickname", "alias"}}`
+#### ②options参数是一个对象
+#### 属性包括：`multi` -- 若为true，则全部匹配文档被更新，否则，只更新第一个，`upsert` -- 若为true，则没有匹配时，自动创建
+`use test`<br/>
+`coll = db.getCollection("transportation")`<br/>
+`coll.update({speed: "120mph"}, {$set: {speed: "150mph", updated: true}}, {upsert: false, multi: true})`<br/>
+`coll.save({"_id": ObjectId("52a0caf33120fa0d0e424ddb"), "vehicle": "plane", "speed": "500mph"})`<br/>
+`coll.save({"_id": ObjectId("56c14382d86b1647da72ed5f"), "vehicle": "plane", "speed": "500mph"})`
+#### 注意：save方法传入的ObjectId要和原先一致，否则会重新创建一个新文档，如代码示例中的第一个save语句
+### 7.从集合中删除文档
+#### 使用remove(query)删除，若不传入查询参数，则删除集合下所有文档
+`use test`<br/>
+`coll = db.getCollection("transportation")`<br/>
+`coll.remove({vehicle: "plane"})`<br/>
+`coll.remove()`
