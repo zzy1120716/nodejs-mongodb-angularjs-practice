@@ -1,6 +1,8 @@
 /**
  * Created by Administrator on 2016/2/15.
  * 使用MongoClient对象实例连接到MongoDB
+ * 2.0以上的mongodb不支持该方法
+ * 官方文档推荐使用连接字符串连接到mongodb
  */
 // 创建MongoClient和Server实例
 var MongoClient = require('mongodb').MongoClient,

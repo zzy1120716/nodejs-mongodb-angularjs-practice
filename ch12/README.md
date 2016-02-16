@@ -131,6 +131,7 @@ db.addUser({ user: "testUser",
 ### 6.删除用户
 `use testDB`<br/>
 `db.removeUser("testUser")`
+#### 注意：`removeUser()`方法已过时，使用`dropUser()`方法代替
 ## 四、MongoDB配置访问控制
 ### 1.创建用户管理员账户
 `use admin`<br/>
@@ -141,11 +142,21 @@ db.addUser({ user: "testUser",
 ```
 WARNING: The 'addUser' shell helper is DEPRECATED. Please use 'createUser' instead
 ```
-#### 因此用createUser代替……（其他不变）
-`use admin`<br/>
-`db.createUser({user: "useradmin",
-            pwd: "test",
-            roles: ["userAdminAnyDatabase"]})`
+#### 因此用createUser代替
+#### 语法：与addUser略有不同
+#### 参数：
+#### customDate（可选）：用于存储任何与该用户相关的信息
+#### roles：对象数组，两个属性：\<role\>，用户角色；\<db\>，角色所属数据库
+```
+db.createUser({ user: "<name>",
+  pwd: "<cleartext password>",
+  customData: { <any information> },
+  roles: [
+    { role: "<role>", db: "<database>" } | "<role>",
+    ...
+  ]
+})
+```
 ### 2.打开身份验证
 #### 方法一：
 #### 启动命令：
@@ -164,7 +175,11 @@ mongo admin --username "useradmin" --password "test"
 `use admin`<br/>
 `db.createUser({user: "dbadmin",
                 pwd: "test",
-                roles: ["readWriteAnyDatabase", "dbAdminAnyDatabase", "clusterAdmin"]})`
+                roles: [
+                        {role: "readWriteAnyDatabase", db: "admin"},
+                        {role: "dbAdminAnyDatabase", db: "admin"},
+                        {role: "clusterAdmin", db: "admin"}
+                       ])`
 #### 验证刚创建的用户身份：
 `use admin`<br/>
 `db.auth("dbadmin", "test")`

@@ -110,3 +110,48 @@
     </tr>
 </table>
 #### 运行13-1过程中出错：`TypeError: client.open is not a function`
+#### 原因：2.0以上的mongodb不支持该方法
+#### 解决方法：按照官方文档推荐使用的连接字符串方法连接到mongodb
+#### 运行13-2过程中出错：`Connection Failed Via Connection String.`
+#### 原因：dbadmin用户没有操作test数据库的权限
+#### 解决方法：重新创建一个test数据库管理员用户
+`use test`<br/>
+`db.createUser({user: "dbadmin",pwd: "test", roles: [{role:"readWrite",db:"test"}, {role: "dbAdmin",db:"test"}]})`
+## 三、MongoDB Node.js驱动程序中的对象
+### 1.Db对象
+#### 通过`MongoClient.connect(... , function(err,db){...})`回调函数获取
+### 2.Admin对象
+#### 方法一：
+`var adminDb = db.admin()`
+#### 方法二：
+`var adminDb = new Admin(db)`
+### 3.Collection对象
+`var collection = db.collection()`<br/>
+`var collection = new Collection(db, "myCollection")`<br/>
+`db.createCollection("newCollection", function(err, collection) {})`
+### 4.Cursor对象（游标）
+## 四、访问和操作数据库
+### 1.创建、列出、删除数据库实例（13-3）
+### 2.获取MongoDB服务器的状态（13-4）
+#### 问题：只能在admin中查看serverStatus？test数据库连接后，status输出结果为false
+## 五、访问和操作集合
+### 1.创建、列出和删除集合的示例（13-5）
+#### ①列出集合的两种方法`collectionNames()`和`collections()`的区别：
+#### 回调中创建的第二个参数对象不同
+#### 方法一创建集合名称对象数组
+#### 方法二创建Collection对象数组
+#### 注意：目前mongodb已经没有`collectionNames()`方法
+#### 只有`collection(name, options, callback)`（获取指定集合）和`collections()`（获取全部集合组成的数组）
+#### ②删除集合的两种方法：
+```
+var myDB = db.db("myDB");
+myDB.dropCollection("collectionA", function(err, results) {   });
+```
+#### 或
+```
+myDB.collection("collectionB", function(err, collB) {
+    collB.drop();
+});
+```
+#### 问题：程序运行结果显示newCollection未被成功删除
+### 2.获取集合信息（13-6）`stat()`
