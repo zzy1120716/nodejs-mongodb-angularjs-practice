@@ -34,11 +34,11 @@ function countItems(err, words) {
   ]}, function(err, count) {
     console.log("Words that start and end with a vowel: " + count);
   });
-  // 6.包含超过6个原音的单词的数量
+  // 6.包含超过6个元音的单词的数量
   words.count({"stats.vowels": {$gt: 6}}, function(err, count) {
     console.log("Words containing 7 or more vowels: " + count);
   });
-  // 7.包含所有原音的单词的数量
+  // 7.包含所有元音的单词的数量
   words.count({letters: {$all: ['a', 'e', 'i', 'o', 'u']}}, function(err, count) {
     console.log("Words with all 5 vowels: " + count);
   });

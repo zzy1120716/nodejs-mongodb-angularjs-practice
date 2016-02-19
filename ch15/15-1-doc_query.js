@@ -44,11 +44,11 @@ function findItems(err, words) {
   ]}, function(err, cursor) {
     displayWords("Words that start and end with a vowel: ", cursor);
   });
-  // 6.包含超过6个原音的单词
+  // 6.包含超过6个元音的单词
   words.find({"stats.vowels": {$gt: 6}}, function(err, cursor) {
     displayWords("Words containing 7 or more vowels: ", cursor);
   });
-  // 7.包含所有原音的单词
+  // 7.包含所有元音的单词
   words.find({letters: {$all: ['a', 'e', 'i', 'o', 'u']}}, function(err, cursor) {
     displayWords("Words with all 5 vowels: ", cursor);
   });

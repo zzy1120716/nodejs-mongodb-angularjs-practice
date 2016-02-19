@@ -14,4 +14,12 @@
 ### 15-4
 ### 3.对结果进行分页
 ### 15-5
-
+### 问题：出现TypeError错误
+### 原因：多一次循环导致cursor为undefined？
+### 4.排序
+### 15-6
+### 5.查找不同字段值
+### 15-7
+### 6.对结果进行分组
+### 15-8
+#### `group(keys, query, initial, reduce, finalize, command, [options], callback)`
